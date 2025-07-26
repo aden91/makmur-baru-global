@@ -213,7 +213,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
-                    <img src="metting.jpeg" alt="Image of Momen pertemuan tim atau partner 3" class="w-full h-64 object-cover">
+                    <img src="32dffba8-7369-4c34-9214-f91b2ce41450_orig.jpeg" alt="Image of Momen pertemuan tim atau partner 3" class="w-full h-64 object-cover">
                     <div class="p-4">
                         <p class="text-gray-700 text-sm">Rapat kolaborasi</p>
                     </div>
@@ -225,7 +225,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
-                    <img src="8f94cbfa-240f-446e-80fe-13083cae4c06_orig.jpg" alt="Image of Momen pertemuan tim atau partner 5" class="w-full h-64 object-cover">
+                    <img src="metting.jpeg" alt="Image of Momen pertemuan tim atau partner 5" class="w-full h-64 object-cover">
                     <div class="p-4">
                         <p class="text-gray-700 text-sm">Sesi berbagi ide</p>
                     </div>
@@ -386,9 +386,8 @@
             chatHistory.push({ role: "user", parts: [{ text: userMessage }] });
 
             const payload = { contents: chatHistory };
-            const apiKey = "AIzaSyDUyxoqSp1GlvmUfZAARzBvyCedUA_lS9U"; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            const payload = { contents: chatHistory, generationConfig: { temperature: 0.7, topK: 1, topP: 1, maxOutputTokens: 8192 } };
+            const apiKey = ""; // Canvas will automatically provide this
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             let retries = 0;
             const maxRetries = 5;
