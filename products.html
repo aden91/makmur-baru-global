@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk & Layanan - Makmur Baru Global</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light background for elegance */
+        }
+        .section-padding {
+            padding: 4rem 1rem; /* Consistent vertical padding */
+        }
+        @media (min-width: 768px) {
+            .section-padding {
+                padding: 6rem 2rem;
+            }
+        }
+        /* Custom Green Gradient for text */
+        .text-gradient-green {
+            background: linear-gradient(90deg, #1A321F, #4CAF50, #66BB6A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom Green Gradient for backgrounds */
+        .bg-gradient-green {
+            background: linear-gradient(135deg, #1A321F, #4CAF50, #66BB6A);
+        }
+        /* Custom Green Shadow */
+        .shadow-green {
+            box-shadow: 0 10px 15px -3px rgba(30, 63, 42, 0.3), 0 4px 6px -2px rgba(30, 63, 42, 0.2);
+        }
+        /* Custom table styling for responsiveness and aesthetics */
+        .price-table-container {
+            overflow-x: auto; /* Enable horizontal scrolling on small screens */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+        .price-table {
+            min-width: 768px; /* Ensure table is wide enough for desktop, allowing scroll on smaller */
+        }
+        .price-table th, .price-table td {
+            padding: 1rem; /* Consistent padding for table cells */
+            text-align: left; /* Align text to the left */
+        }
+        .price-table th {
+            background-color: #e6ffe6; /* Light green header background */
+            color: #1f2937; /* Dark text for headers */
+            font-weight: 600; /* Semi-bold headers */
+            border-bottom: 2px solid #c0e0c0; /* Separator for header */
+        }
+        .price-table tbody tr:nth-child(even) {
+            background-color: #f2fff2; /* Subtle zebra striping for rows */
+        }
+        .price-table tbody tr:hover {
+            background-color: #d0f0d0; /* Light green on hover */
+            transition: background-color 0.2s ease-in-out;
+        }
+        .price-table td:first-child {
+            font-weight: 500; /* Slightly bolder for product names */
+        }
+        .price-table td {
+            border-bottom: 1px solid #c0e0c0; /* Light border for rows */
+        }
+        .price-table tbody tr:last-child td {
+            border-bottom: none; /* No border for the last row */
+        }
+
+        /* Chatbot specific styles (Copy these from index.html) */
+        .chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: #4CAF50; /* Accent Green */
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        .chat-bubble:hover {
+            transform: scale(1.1);
+        }
+        .chat-modal {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 90%;
+            max-width: 400px;
+            height: 80vh;
+            max-height: 600px;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1001;
+        }
+        .chat-header {
+            background-color: #4CAF50; /* Accent Green */
+            color: white;
+            padding: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #f0f2f5; /* Light gray background for messages */
+        }
+        .message-bubble {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .message-user {
+            background-color: #e2e8f0; /* Light blue-gray for user */
+            margin-left: auto;
+            border-bottom-right-radius: 0.25rem;
+        }
+        .message-bot {
+            background-color: #4CAF50; /* Accent Green for bot */
+            color: white;
+            margin-right: auto;
+            border-bottom-left-radius: 0.25rem;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            background-color: white;
+        }
+        .chat-input {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.5rem;
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+        .chat-send-btn {
+            background-color: #4CAF50; /* Accent Green */
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .chat-send-btn:hover {
+            background-color: #66BB6A; /* Lighter Accent Green */
+        }
+        .chat-loading {
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header Section (Salin dari index.html) -->
+    <header class="bg-white shadow-md py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center flex-wrap">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="Logo Makmur Baru Global.jpg" alt="Logo Makmur Baru Global" class="h-10 rounded-full">
+                <span class="text-xl font-bold text-gradient-green hidden sm:block">MAKMUR BARU GLOBAL</span>
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                <i class="fas fa-bars text-gray-700 text-2xl"></i>
+            </button>
+
+            <!-- Navigation Menu -->
+            <nav id="main-nav" class="hidden md:flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 w-full md:w-auto text-center items-center">
+                <a href="index.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Beranda</a>
+                <a href="about.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Tentang Kami</a>
+                <a href="products.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Produk & Layanan</a>
+                <a href="promotions.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Promosi</a>
+                <a href="clients.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Klien & Mitra</a>
+                <a href="gallery.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Galeri</a>
+                <a href="contact.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Kontak</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Menu (hidden by default) (Salin dari index.html) -->
+    <div id="mobile-menu" class="hidden bg-white shadow-lg py-4 md:hidden">
+        <nav class="flex flex-col items-center space-y-4">
+            <a href="index.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Beranda</a>
+            <a href="about.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Tentang Kami</a>
+            <a href="products.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Produk & Layanan</a>
+            <a href="promotions.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Promosi</a>
+            <a href="clients.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Klien & Mitra</a>
+            <a href="gallery.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Galeri</a>
+            <a href="contact.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Kontak</a>
+        </nav>
+    </div>
+
+    <!-- Date and Time Display Section (Salin dari index.html) -->
+    <section class="bg-green-50 py-3 shadow-sm">
+        <div class="container mx-auto px-4 text-center">
+            <div id="datetime-display" class="text-gray-700 text-sm md:text-base font-medium">
+                <!-- Date and time will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Products & Services Section (Konten Utama untuk products.html) -->
+    <section id="products" class="section-padding bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient-green">Produk & Layanan Kami</h2>
+            <p class="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto mb-12">
+                Kami menawarkan berbagai layanan maklon kosmetik untuk memenuhi kebutuhan brand Anda.
+            </p>
+
+            <!-- Services Offered -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 transform hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-[#4CAF50] mb-4 text-3xl"><i class="fas fa-flask"></i></div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Riset & Pengembangan</h3>
+                    <p class="text-gray-700">Tim ahli kami siap membantu mengembangkan formula produk inovatif sesuai tren pasar.</p>
+                </div>
+                <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 transform hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-[#4CAF50] mb-4 text-3xl"><i class="fas fa-industry"></i></div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Produksi Massal</h3>
+                    <p class="text-gray-700">Fasilitas produksi modern dengan standar GMP untuk menjamin kualitas dan keamanan produk.</p>
+                </div>
+                <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 transform hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-[#4CAF50] mb-4 text-3xl"><i class="fas fa-scroll"></i></div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Legalitas BPOM</h3>
+                    <p class="text-gray-700">Kami mengurus seluruh proses pendaftaran BPOM hingga produk Anda siap edar.</p>
+                </div>
+                <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 transform hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-[#4CAF50] mb-4 text-3xl"><i class="fas fa-box-open"></i></div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Desain Kemasan</h3>
+                    <p class="text-gray-700">Tim desain profesional kami akan menciptakan kemasan yang menarik dan sesuai identitas brand Anda.</p>
+                </div>
+                <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 transform hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-[#4CAF50] mb-4 text-3xl"><i class="fas fa-truck"></i></div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Distribusi & Logistik</h3>
+                    <p class="text-gray-700">Bantuan dalam proses distribusi produk Anda ke pasar.</p>
+                </div>
+                <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 transform hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-[#4CAF50] mb-4 text-3xl"><i class="fas fa-lightbulb"></i></div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Konsultasi & Support</h3>
+                    <p class="text-gray-700">Dukungan penuh dari tim kami untuk setiap langkah perjalanan brand Anda.</p>
+                </div>
+            </div>
+
+            <!-- Product Categories with Images and Separation -->
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-gray-900">Kategori Produk yang Kami Produksi:</h3>
+
+            <!-- Skin Care Category -->
+            <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 mb-8 text-left max-w-4xl mx-auto transform hover:scale-[1.01] transition duration-300 ease-in-out">
+                <img src="https://placehold.co/800x400/DDA0DD/FFFFFF?text=SKIN+CARE+PRODUCTS" alt="[Image of Skin Care Products]" class="w-full h-auto rounded-md mb-6 object-cover">
+                <h4 class="text-xl font-semibold mb-3 text-green-600">SKIN CARE</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-gray-700">
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>DAY CREAM</li>
+                        <li>NIGHT CREAM</li>
+                        <li>FACIAL WASH</li>
+                        <li>FACIAL SOAP BAR</li>
+                        <li>FACE TONER</li>
+                        <li>ROSE WATER</li>
+                        <li>FACE SERUM</li>
+                        <li>SHEET MASK</li>
+                    </ul>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>SUNSCREEN</li>
+                        <li>GEL MASK</li>
+                        <li>CLAY MASK</li>
+                        <li>MOISTURIZER</li>
+                        <li>2IN1 CREAM</li>
+                        <li>EXFOLIATING PEELING GEL</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Body Care Category -->
+            <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 mb-8 text-left max-w-4xl mx-auto transform hover:scale-[1.01] transition duration-300 ease-in-out">
+                <img src="https://placehold.co/800x400/87CEEB/FFFFFF?text=BODY+CARE+PRODUCTS" alt="[Image of Body Care Products]" class="w-full h-auto rounded-md mb-6 object-cover">
+                <h4 class="text-xl font-semibold mb-3 text-green-600">BODY CARE</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-gray-700">
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>BODY LOTION</li>
+                        <li>BODY WASH</li>
+                        <li>BODY SERUM</li>
+                        <li>BODY SCRUB</li>
+                        <li>BODY BUTTER</li>
+                    </ul>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>BODY ESSENCE</li>
+                        <li>BODY TONER</li>
+                        <li>DEODORANT SPRAY</li>
+                        <li>INTIMATE SPRAY</li>
+                        <li>FEMINIM WASH</li>
+                        <li>EXFOLIATING PEELING GEL</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Hair Care Category -->
+            <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 mb-8 text-left max-w-4xl mx-auto transform hover:scale-[1.01] transition duration-300 ease-in-out">
+                <img src="https://placehold.co/800x400/90EE90/FFFFFF?text=HAIR+CARE+PRODUCTS" alt="[Image of Hair Care Products]" class="w-full h-auto rounded-md mb-6 object-cover">
+                <h4 class="text-xl font-semibold mb-3 text-green-600">HAIR CARE</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                    <li>HAIR SHAMPOO</li>
+                    <li>HAIR TONIC</li>
+                    <li>HAIR SERUM</li>
+                </ul>
+            </div>
+
+            <!-- Decorative Category -->
+            <div class="bg-[#F0FFF0] rounded-lg shadow-md p-6 mb-12 text-left max-w-4xl mx-auto transform hover:scale-[1.01] transition duration-300 ease-in-out">
+                <img src="https://placehold.co/800x400/FFB6C1/FFFFFF?text=DECORATIVE+PRODUCTS" alt="[Image of Decorative Products]" class="w-full h-auto rounded-md mb-6 object-cover">
+                <h4 class="text-xl font-semibold mb-3 text-green-600">DECORATIVE</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                    <li>BB CREAM</li>
+                    <li>LOOSE POWDER</li>
+                    <li>CUSHION</li>
+                    <li>LIP CREAM</li>
+                    <li>LIP SERUM</li>
+                    <li>LIP BALM</li>
+                    <li>EAU DE PARFUME</li>
+                </ul>
+            </div>
+            <!-- End Product Categories with Images and Separation -->
+
+            <p class="text-lg text-gray-700 font-medium mt-4">
+                Tersedia Juga: MINUMAN KECANTIKAN, PELANGSING & HERBAL
+            </p>
+            <p class="text-lg text-gray-700 font-medium mt-2">
+                <i class="fab fa-whatsapp text-green-500 mr-2"></i> 0819-3537-7474
+            </p>
+
+            <!-- Price List Table -->
+            <div class="mt-12">
+                <h3 class="text-2xl md:text-3xl font-bold mb-8 text-gray-900">Daftar Harga Produk Maklon</h3>
+                <div class="price-table-container bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 mx-auto max-w-4xl">
+                    <table class="price-table w-full text-sm sm:text-base">
+                        <thead>
+                            <tr>
+                                <th>KATEGORI</th>
+                                <th>PRODUK</th>
+                                <th>NETTO</th>
+                                <th>HARGA TANPA KEMASAN</th>
+                                <th>HARGA KEMASAN REGULER</th>
+                                <th>HARGA DENGAN KEMASAN REGULER</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- SKINCARE -->
+                            <tr>
+                                <td rowspan="5" class="font-semibold text-green-600">SKINCARE</td>
+                                <td>DAY CREAM</td>
+                                <td>10 g</td>
+                                <td>16.200</td>
+                                <td>2.500</td>
+                                <td>18.700</td>
+                            </tr>
+                            <tr>
+                                <td>NIGHT CREAM</td>
+                                <td>10 g</td>
+                                <td>20.200</td>
+                                <td>2.500</td>
+                                <td>22.700</td>
+                            </tr>
+                            <tr>
+                                <td>FACIAL WASH</td>
+                                <td>100 ml</td>
+                                <td>20.600</td>
+                                <td>1.600</td>
+                                <td>22.200</td>
+                            </tr>
+                            <tr>
+                                <td>TONER</td>
+                                <td>100 ml</td>
+                                <td>17.600</td>
+                                <td>1.600</td>
+                                <td>19.200</td>
+                            </tr>
+                            <tr>
+                                <td>SERUM</td>
+                                <td>20 ml</td>
+                                <td>15.500</td>
+                                <td>3.000</td>
+                                <td>18.500</td>
+                            </tr>
+                            <!-- BODY CARE -->
+                            <tr>
+                                <td rowspan="7" class="font-semibold text-green-600">BODY CARE</td>
+                                <td>DAY LOTION</td>
+                                <td>100 ml</td>
+                                <td>14.000</td>
+                                <td>1.800</td>
+                                <td>15.800</td>
+                            </tr>
+                            <tr>
+                                <td>NIGHT LOTION</td>
+                                <td>100 ml</td>
+                                <td>30.000</td>
+                                <td>1.800</td>
+                                <td>31.800</td>
+                            </tr>
+                            <tr>
+                                <td>BODY WASH</td>
+                                <td>250 ml</td>
+                                <td>30.000</td>
+                                <td>2.000</td>
+                                <td>32.000</td>
+                            </tr>
+                            <tr>
+                                <td>BODY SCRUB</td>
+                                <td>100 ml</td>
+                                <td>20.000</td>
+                                <td>2.200</td>
+                                <td>22.200</td>
+                            </tr>
+                            <tr>
+                                <td>BODY OIL</td>
+                                <td>100 ml</td>
+                                <td>14.000</td>
+                                <td>1.800</td>
+                                <td>15.800</td>
+                            </tr>
+                            <tr>
+                                <td>BODY SERUM</td>
+                                <td>100 ml</td>
+                                <td>14.000</td>
+                                <td>1.800</td>
+                                <td>15.800</td>
+                            </tr>
+                            <tr>
+                                <td>TONER BADAN</td>
+                                <td>100 ml</td>
+                                <td>14.000</td>
+                                <td>1.600</td>
+                                <td>15.600</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>PEELING</td>
+                                <td>100 ml</td>
+                                <td>25.000</td>
+                                <td>2.000</td>
+                                <td>27.000</td>
+                            </tr>
+                            <!-- LIP CARE -->
+                            <tr>
+                                <td rowspan="3" class="font-semibold text-green-600">LIP CARE</td>
+                                <td>LIP CREAM</td>
+                                <td>4 ml</td>
+                                <td>15.000</td>
+                                <td>4.000</td>
+                                <td>19.000</td>
+                            </tr>
+                            <tr>
+                                <td>LIP TINT</td>
+                                <td>4 ml</td>
+                                <td>15.000</td>
+                                <td>4.000</td>
+                                <td>19.000</td>
+                            </tr>
+                            <tr>
+                                <td>LIP SCRUB</td>
+                                <td>10 g</td>
+                                <td>10.000</td>
+                                <td>1.500</td>
+                                <td>11.500</td>
+                            </tr>
+                            <!-- MAKE UP -->
+                            <tr>
+                                <td rowspan="4" class="font-semibold text-green-600">MAKE UP</td>
+                                <td>BB CREAM</td>
+                                <td>10 ml</td>
+                                <td>18.500</td>
+                                <td>2.200</td>
+                                <td>20.700</td>
+                            </tr>
+                            <tr>
+                                <td>FOUNDATION</td>
+                                <td>10 ml</td>
+                                <td>20.000</td>
+                                <td>4.000</td>
+                                <td>24.000</td>
+                            </tr>
+                            <tr>
+                                <td>MILK CLEANSER</td>
+                                <td>100 ml</td>
+                                <td>15.000</td>
+                                <td>2.000</td>
+                                <td>17.000</td>
+                            </tr>
+                            <tr>
+                                <td>MICELLAR WATER</td>
+                                <td>100 ml</td>
+                                <td>15.000</td>
+                                <td>2.000</td>
+                                <td>17.000</td>
+                            </tr>
+                            <!-- HAIR CARE -->
+                            <tr>
+                                <td rowspan="5" class="font-semibold text-green-600">HAIR CARE</td>
+                                <td>SHAMPOO RAMBUT</td>
+                                <td>100 ml</td>
+                                <td>25.000</td>
+                                <td>2.500</td>
+                                <td>27.500</td>
+                            </tr>
+                            <tr>
+                                <td>SHAMPOO RAMBUT RONTOK</td>
+                                <td>100 ml</td>
+                                <td>25.000</td>
+                                <td>2.500</td>
+                                <td>27.500</td>
+                            </tr>
+                            <tr>
+                                <td>SHAMPOO RAMBUT KETOMBE</td>
+                                <td>100 ml</td>
+                                <td>25.000</td>
+                                <td>2.500</td>
+                                <td>27.500</td>
+                            </tr>
+                            <tr>
+                                <td>SHAMPOO RAMBUT MINYAK</td>
+                                <td>100 ml</td>
+                                <td>25.000</td>
+                                <td>2.500</td>
+                                <td>27.500</td>
+                            </tr>
+                            <tr>
+                                <td>CONDITIONER RAMBUT RONTOK</td>
+                                <td>100 ml</td>
+                                <td>24.000</td>
+                                <td>3.500</td>
+                                <td>27.500</td>
+                            </tr>
+                            <!-- PARFUME -->
+                            <tr>
+                                <td class="font-semibold text-green-600">PARFUME</td>
+                                <td>PARFUME</td>
+                                <td>30 ml</td>
+                                <td>START 14.000</td>
+                                <td>1.000</td>
+                                <td>START 15.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-sm text-gray-500 mt-4">
+                    Untuk daftar harga lebih detail atau penawaran khusus, silakan hubungi kami.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section (Salin dari index.html) -->
+    <footer class="bg-[#1A321F] text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <img src="Logo Makmur Baru Global.jpg" alt="Logo Makmur Baru Global" class="h-12 mx-auto mb-4 rounded-full">
+                    <p class="text-lg font-bold text-gradient-green">MAKMUR BARU GLOBAL</p>
+                    <p class="text-sm text-gray-400">Maklon Kosmetik Terpercaya</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">Navigasi Cepat</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-[#4CAF50] transition duration-300">Beranda</a></li>
+                        <li><a href="about.html" class="hover:text-[#4CAF50] transition duration-300">Tentang Kami</a></li>
+                        <li><a href="products.html" class="hover:text-[#4CAF50] transition duration-300">Produk & Layanan</a></li>
+                        <li><a href="promotions.html" class="hover:text-[#4CAF50] transition duration-300">Promosi</a></li>
+                        <li><a href="clients.html" class="hover:text-[#4CAF50] transition duration-300">Klien & Mitra</a></li>
+                        <li><a href="gallery.html" class="hover:text-[#4CAF50] transition duration-300">Galeri</a></li>
+                        <li><a href="contact.html" class="hover:text-[#4CAF50] transition duration-300">Kontak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">Hubungi Kami</h4>
+                    <p class="mb-2">Alamat Kantor:</p>
+                    <p class="mb-2">Pergudangan dan Industri SIRIE Blok Q80 Ds. Rangkah Kidul Kec. Sidoarjo Kab. Sidoarjo. Jawa Timur. 61234.</p>
+                    <p class="mb-2">Alamat Marketing Office:</p>
+                    <p class="mb-2">Jl. Danau Indah Barat 3 Blok B-2 No. 25, Sunter-Jakarta Utara. DKI Jakarta.</p>
+                    <p class="mb-2">Telp: +62 819-3537-7474</p>
+                    <p>Email: info@makmurbaruglobal.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 mt-8">
+                <p>&copy; <span id="current-year-footer"></span> Makmur Baru Global. Hak Cipta Dilindungi Undang-Undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot Floating Bubble (Salin dari index.html) -->
+    <div id="chat-bubble" class="chat-bubble">
+        <i class="fas fa-comments text-3xl"></i>
+    </div>
+
+    <!-- Chatbot Modal (Salin dari index.html) -->
+    <div id="chat-modal" class="chat-modal hidden">
+        <div class="chat-header">
+            <span>Asisten Makmur Baru Global</span>
+            <button id="close-chat-btn" class="text-white hover:text-gray-200 focus:outline-none">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <!-- Initial welcome message -->
+            <div class="message-bubble message-bot">Halo! Saya Asisten Virtual Makmur Baru Global. Silakan bertanya tentang produk kami atau masalah kulit Anda.</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Ketik pertanyaan Anda..." onkeypress="handleKeyPress(event)">
+            <button id="chat-send-btn" class="chat-send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+        <div id="chat-loading" class="chat-loading hidden">
+            <i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...
+        </div>
+    </div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year-footer').textContent = new Date().getFullYear();
+
+        // Function to update current day, date, and time
+        function updateDateTime() {
+            const datetimeDisplay = document.getElementById('datetime-display');
+            const now = new Date();
+
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false // Use 24-hour format
+            };
+            const formatter = new Intl.DateTimeFormat('id-ID', options);
+            const formattedDateTime = formatter.format(now);
+
+            if (datetimeDisplay) {
+                datetimeDisplay.textContent = formattedDateTime;
+            }
+        }
+
+        // Update date and time every second
+        setInterval(updateDateTime, 1000);
+        // Initial call to display immediately
+        updateDateTime();
+
+
+        // Chatbot functionality
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatModal = document.getElementById('chat-modal');
+        const closeChatBtn = document.getElementById('close-chat-btn');
+        const chatMessagesDiv = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+        const chatLoading = document.getElementById('chat-loading');
+
+        let chatHistory = [{
+            role: "user",
+            parts: [{ text: "Anda adalah asisten virtual untuk Makmur Baru Global, perusahaan maklon kosmetik. Tugas Anda adalah membantu pengguna dengan pertanyaan terkait kulit dan merekomendasikan produk Makmur Baru Global yang relevan. Produk kami meliputi: SKIN CARE (DAY CREAM, NIGHT CREAM, FACIAL WASH, FACIAL SOAP BAR, FACE TONER, ROSE WATER, FACE SERUM, SHEET MASK, SUNSCREEN, GEL MASK, CLAY MASK, MOISTURIZER, 2IN1 CREAM, EXFOLIATING PEELING GEL), BODY CARE (BODY LOTION, BODY WASH, BODY SERUM, BODY SCRUB, BODY BUTTER, BODY ESSENCE, BODY TONER, DEODORANT SPRAY, INTIMATE SPRAY, FEMINIM WASH, EXFOLIATING PEELING GEL), HAIR CARE (HAIR SHAMPOO, HAIR TONIC, HAIR SERUM), DECORATIVE (BB CREAM, LOOSE POWDER, CUSHION, LIP CREAM, LIP SERUM, LIP BALM, EAU DE PARFUME), serta MINUMAN KECANTIKAN, PELANGSING & HERBAL. Selalu usahakan untuk merekomendasikan produk Makmur Baru Global yang spesifik jika relevan dengan pertanyaan pengguna. Jaga jawaban Anda ringkas dan informatif, serta dalam bahasa Indonesia." }]
+        }]; // Pre-fill with system instruction
+
+
+        // Function to display messages
+        function displayMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message-bubble');
+            if (sender === 'user') {
+                messageElement.classList.add('message-user');
+            } else {
+                messageElement.classList.add('message-bot');
+            }
+            messageElement.textContent = message;
+            chatMessagesDiv.appendChild(messageElement);
+            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight; // Auto-scroll to bottom
+        }
+
+        // Function to send message to Gemini API with exponential backoff
+        async function sendToGeminiAPI(userMessage) {
+            displayMessage(userMessage, 'user');
+            chatInput.value = ''; // Clear input immediately
+            chatLoading.classList.remove('hidden'); // Show loading indicator
+            chatInput.disabled = true;
+            chatSendBtn.disabled = true;
+
+            chatHistory.push({ role: "user", parts: [{ text: userMessage }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // Canvas will automatically provide this
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            let retries = 0;
+            const maxRetries = 5;
+            let delay = 1000; // 1 second
+
+            while (retries < maxRetries) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429) { // Too many requests
+                            console.warn(`Rate limit hit. Retrying in ${delay / 1000}s...`);
+                            await new Promise(res => setTimeout(res, delay));
+                            delay *= 2; // Exponential backoff
+                            retries++;
+                            continue;
+                        } else {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                    }
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const botResponse = result.candidates[0].content.parts[0].text;
+                        displayMessage(botResponse, 'bot');
+                        chatHistory.push({ role: "model", parts: [{ text: botResponse }] }); // Add bot response to history
+                    } else {
+                        displayMessage("Maaf, saya tidak dapat memahami respons. Silakan coba lagi.", 'bot');
+                    }
+                    break; // Exit loop on success
+                } catch (error) {
+                    console.error('Error communicating with Gemini API:', error);
+                    displayMessage("Terjadi kesalahan saat berkomunikasi dengan asisten. Mohon coba lagi.", 'bot');
+                    break; // Exit loop on critical error
+                } finally {
+                    chatLoading.classList.add('hidden'); // Hide loading indicator
+                    chatInput.disabled = false;
+                    chatSendBtn.disabled = false;
+                    chatInput.focus(); // Focus input for next message
+                }
+            }
+        }
+
+        // Event listeners for chat bubble and modal
+        chatBubble.addEventListener('click', () => {
+            chatModal.classList.toggle('hidden');
+            chatBubble.classList.add('hidden'); // Hide bubble when modal is open
+        });
+
+        closeChatBtn.addEventListener('click', () => {
+            chatModal.classList.add('hidden');
+            chatBubble.classList.remove('hidden'); // Show bubble when modal is closed
+        });
+
+        chatSendBtn.addEventListener('click', () => {
+            const userMessage = chatInput.value.trim();
+            if (userMessage) {
+                sendToGeminiAPI(userMessage);
+            }
+        });
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                chatSendBtn.click();
+            }
+        }
+    </script>
+</body>
+</html>

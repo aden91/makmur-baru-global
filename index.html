@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makmur Baru Global - Solusi Maklon Kosmetik Terlengkap</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light background for elegance */
+        }
+        .section-padding {
+            padding: 4rem 1rem; /* Consistent vertical padding */
+        }
+        @media (min-width: 768px) {
+            .section-padding {
+                padding: 6rem 2rem;
+            }
+        }
+        /* Custom Green Gradient for text */
+        .text-gradient-green {
+            background: linear-gradient(90deg, #1A321F, #4CAF50, #66BB6A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom Green Gradient for backgrounds */
+        .bg-gradient-green {
+            background: linear-gradient(135deg, #1A321F, #4CAF50, #66BB6A);
+        }
+        /* Custom Green Shadow */
+        .shadow-green {
+            box-shadow: 0 10px 15px -3px rgba(30, 63, 42, 0.3), 0 4px 6px -2px rgba(30, 63, 42, 0.2);
+        }
+        /* Chatbot specific styles */
+        .chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: #4CAF50; /* Accent Green */
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        .chat-bubble:hover {
+            transform: scale(1.1);
+        }
+        .chat-modal {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 90%;
+            max-width: 400px;
+            height: 80vh;
+            max-height: 600px;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1001;
+        }
+        .chat-header {
+            background-color: #4CAF50; /* Accent Green */
+            color: white;
+            padding: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #f0f2f5; /* Light gray background for messages */
+        }
+        .message-bubble {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .message-user {
+            background-color: #e2e8f0; /* Light blue-gray for user */
+            margin-left: auto;
+            border-bottom-right-radius: 0.25rem;
+        }
+        .message-bot {
+            background-color: #4CAF50; /* Accent Green for bot */
+            color: white;
+            margin-right: auto;
+            border-bottom-left-radius: 0.25rem;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            background-color: white;
+        }
+        .chat-input {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.5rem;
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+        .chat-send-btn {
+            background-color: #4CAF50; /* Accent Green */
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .chat-send-btn:hover {
+            background-color: #66BB6A; /* Lighter Accent Green */
+        }
+        .chat-loading {
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center flex-wrap">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="Logo Makmur Baru Global.jpg" alt="Logo Makmur Baru Global" class="h-10 rounded-full">
+                <span class="text-xl font-bold text-gradient-green hidden sm:block">MAKMUR BARU GLOBAL</span>
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                <i class="fas fa-bars text-gray-700 text-2xl"></i>
+            </button>
+
+            <!-- Navigation Menu -->
+            <nav id="main-nav" class="hidden md:flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 w-full md:w-auto text-center items-center">
+                <a href="index.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Beranda</a>
+                <a href="about.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Tentang Kami</a>
+                <a href="products.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Produk & Layanan</a>
+                <a href="promotions.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Promosi</a>
+                <a href="clients.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Klien & Mitra</a>
+                <a href="gallery.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Galeri</a>
+                <a href="contact.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out">Kontak</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Menu (hidden by default) -->
+    <div id="mobile-menu" class="hidden bg-white shadow-lg py-4 md:hidden">
+        <nav class="flex flex-col items-center space-y-4">
+            <a href="index.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Beranda</a>
+            <a href="about.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Tentang Kami</a>
+            <a href="products.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Produk & Layanan</a>
+            <a href="promotions.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Promosi</a>
+            <a href="clients.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Klien & Mitra</a>
+            <a href="gallery.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Galeri</a>
+            <a href="contact.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Kontak</a>
+        </nav>
+    </div>
+
+    <!-- Date and Time Display Section -->
+    <section class="bg-green-50 py-3 shadow-sm">
+        <div class="container mx-auto px-4 text-center">
+            <div id="datetime-display" class="text-gray-700 text-sm md:text-base font-medium">
+                <!-- Date and time will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- New Promotion Banner Section -->
+    <section id="promo-banner" class="bg-white py-8 md:py-12">
+        <div class="container mx-auto px-4">
+            <div class="relative bg-gradient-green rounded-lg shadow-xl overflow-hidden flex flex-col md:flex-row items-center p-6 md:p-8">
+                <div class="md:w-1/2 text-center md:text-left p-4">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
+                        Penawaran Spesial untuk Brand Baru Anda!
+                    </h2>
+                    <p class="text-lg text-gray-100 mb-6">
+                        Mulai perjalanan brand kosmetik impian Anda dengan paket eksklusif dari Makmur Baru Global.
+                        Dapatkan keuntungan dan dukungan penuh dari kami!
+                    </p>
+                    <a href="promotions.html" class="bg-white text-[#1A321F] font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                        Lihat Promo Selengkapnya
+                    </a>
+                </div>
+                <div class="md:w-1/2 flex justify-center items-center mt-6 md:mt-0">
+                    <img src="Promo 1.jpg" alt="[Image of Paket Spesial Pemula]" class="max-h-64 md:max-h-80 rounded-lg shadow-lg object-contain">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section (Beranda Content) -->
+    <section id="home" class="relative bg-gradient-to-r from-[#1A321F] to-[#284A33] text-white flex items-center justify-center min-h-[60vh] md:min-h-[80vh] overflow-hidden">
+        <!-- Background image or pattern, adjusted for dark overlay -->
+        <img src="https://placehold.co/1920x1080/2C2C2C/4CAF50?text=Beauty+Products" alt="Beauty Products" class="absolute inset-0 w-full h-full object-cover opacity-30">
+        <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Dark overlay -->
+
+        <div class="container mx-auto px-4 text-center z-10 py-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-gradient-green">
+                Wujudkan Brand Kosmetik Impian Anda
+            </h1>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto opacity-90">
+                PT. Makmur Baru Global, solusi lengkap jasa maklon kosmetik terbaik untuk Anda. Kualitas terjamin, harga kompetitif.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="products.html" class="bg-gradient-green text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                    Lihat Layanan Kami
+                </a>
+                <a href="contact.html" class="border border-white text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-white hover:text-[#1A321F] transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-[#1A321F] text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <img src="Logo Makmur Baru Global.jpg" alt="Logo Makmur Baru Global" class="h-12 mx-auto mb-4 rounded-full">
+                    <p class="text-lg font-bold text-gradient-green">MAKMUR BARU GLOBAL</p>
+                    <p class="text-sm text-gray-400">Maklon Kosmetik Terpercaya</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">Navigasi Cepat</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-[#4CAF50] transition duration-300">Beranda</a></li>
+                        <li><a href="about.html" class="hover:text-[#4CAF50] transition duration-300">Tentang Kami</a></li>
+                        <li><a href="products.html" class="hover:text-[#4CAF50] transition duration-300">Produk & Layanan</a></li>
+                        <li><a href="promotions.html" class="hover:text-[#4CAF50] transition duration-300">Promosi</a></li>
+                        <li><a href="clients.html" class="hover:text-[#4CAF50] transition duration-300">Klien & Mitra</a></li>
+                        <li><a href="gallery.html" class="hover:text-[#4CAF50] transition duration-300">Galeri</a></li>
+                        <li><a href="contact.html" class="hover:text-[#4CAF50] transition duration-300">Kontak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">Hubungi Kami</h4>
+                    <p class="mb-2">Alamat Kantor:</p>
+                    <p class="mb-2">Pergudangan dan Industri SIRIE Blok Q80 Ds. Rangkah Kidul Kec. Sidoarjo Kab. Sidoarjo. Jawa Timur. 61234.</p>
+                    <p class="mb-2">Alamat Marketing Office:</p>
+                    <p class="mb-2">Jl. Danau Indah Barat 3 Blok B-2 No. 25, Sunter-Jakarta Utara. DKI Jakarta.</p>
+                    <p class="mb-2">Telp: +62 819-3537-7474</p>
+                    <p>Email: info@makmurbaruglobal.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 mt-8">
+                <p>&copy; <span id="current-year"></span> Makmur Baru Global. Hak Cipta Dilindungi Undang-Undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot Floating Bubble -->
+    <div id="chat-bubble" class="chat-bubble">
+        <i class="fas fa-comments text-3xl"></i>
+    </div>
+
+    <!-- Chatbot Modal -->
+    <div id="chat-modal" class="chat-modal hidden">
+        <div class="chat-header">
+            <span>Asisten Makmur Baru Global</span>
+            <button id="close-chat-btn" class="text-white hover:text-gray-200 focus:outline-none">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <!-- Initial welcome message -->
+            <div class="message-bubble message-bot">Halo! Saya Asisten Virtual Makmur Baru Global. Silakan bertanya tentang produk kami atau masalah kulit Anda.</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Ketik pertanyaan Anda..." onkeypress="handleKeyPress(event)">
+            <button id="chat-send-btn" class="chat-send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+        <div id="chat-loading" class="chat-loading hidden">
+            <i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...
+        </div>
+    </div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Function to update current day, date, and time
+        function updateDateTime() {
+            const datetimeDisplay = document.getElementById('datetime-display');
+            const now = new Date();
+
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false // Use 24-hour format
+            };
+            const formatter = new Intl.DateTimeFormat('id-ID', options);
+            const formattedDateTime = formatter.format(now);
+
+            if (datetimeDisplay) {
+                datetimeDisplay.textContent = formattedDateTime;
+            }
+        }
+
+        // Update date and time every second
+        setInterval(updateDateTime, 1000);
+        // Initial call to display immediately
+        updateDateTime();
+
+
+        // Chatbot functionality
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatModal = document.getElementById('chat-modal');
+        const closeChatBtn = document.getElementById('close-chat-btn');
+        const chatMessagesDiv = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+        const chatLoading = document.getElementById('chat-loading');
+
+        let chatHistory = [{
+            role: "user",
+            parts: [{ text: "Anda adalah asisten virtual untuk Makmur Baru Global, perusahaan maklon kosmetik. Tugas Anda adalah membantu pengguna dengan pertanyaan terkait kulit dan merekomendasikan produk Makmur Baru Global yang relevan. Produk kami meliputi: SKIN CARE (DAY CREAM, NIGHT CREAM, FACIAL WASH, FACIAL SOAP BAR, FACE TONER, ROSE WATER, FACE SERUM, SHEET MASK, SUNSCREEN, GEL MASK, CLAY MASK, MOISTURIZER, 2IN1 CREAM, EXFOLIATING PEELING GEL), BODY CARE (BODY LOTION, BODY WASH, BODY SERUM, BODY SCRUB, BODY BUTTER, BODY ESSENCE, BODY TONER, DEODORANT SPRAY, INTIMATE SPRAY, FEMINIM WASH, EXFOLIATING PEELING GEL), HAIR CARE (HAIR SHAMPOO, HAIR TONIC, HAIR SERUM), DECORATIVE (BB CREAM, LOOSE POWDER, CUSHION, LIP CREAM, LIP SERUM, LIP BALM, EAU DE PARFUME), serta MINUMAN KECANTIKAN, PELANGSING & HERBAL. Selalu usahakan untuk merekomendasikan produk Makmur Baru Global yang spesifik jika relevan dengan pertanyaan pengguna. Jaga jawaban Anda ringkas dan informatif, serta dalam bahasa Indonesia." }]
+        }]; // Pre-fill with system instruction
+
+
+        // Function to display messages
+        function displayMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message-bubble');
+            if (sender === 'user') {
+                messageElement.classList.add('message-user');
+            } else {
+                messageElement.classList.add('message-bot');
+            }
+            messageElement.textContent = message;
+            chatMessagesDiv.appendChild(messageElement);
+            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight; // Auto-scroll to bottom
+        }
+
+        // Function to send message to Gemini API with exponential backoff
+        async function sendToGeminiAPI(userMessage) {
+            displayMessage(userMessage, 'user');
+            chatInput.value = ''; // Clear input immediately
+            chatLoading.classList.remove('hidden'); // Show loading indicator
+            chatInput.disabled = true;
+            chatSendBtn.disabled = true;
+
+            chatHistory.push({ role: "user", parts: [{ text: userMessage }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // Canvas will automatically provide this
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            let retries = 0;
+            const maxRetries = 5;
+            let delay = 1000; // 1 second
+
+            while (retries < maxRetries) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429) { // Too many requests
+                            console.warn(`Rate limit hit. Retrying in ${delay / 1000}s...`);
+                            await new Promise(res => setTimeout(res, delay));
+                            delay *= 2; // Exponential backoff
+                            retries++;
+                            continue;
+                        } else {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                    }
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const botResponse = result.candidates[0].content.parts[0].text;
+                        displayMessage(botResponse, 'bot');
+                        chatHistory.push({ role: "model", parts: [{ text: botResponse }] }); // Add bot response to history
+                    } else {
+                        displayMessage("Maaf, saya tidak dapat memahami respons. Silakan coba lagi.", 'bot');
+                    }
+                    break; // Exit loop on success
+                } catch (error) {
+                    console.error('Error communicating with Gemini API:', error);
+                    displayMessage("Terjadi kesalahan saat berkomunikasi dengan asisten. Mohon coba lagi.", 'bot');
+                    break; // Exit loop on critical error
+                } finally {
+                    chatLoading.classList.add('hidden'); // Hide loading indicator
+                    chatInput.disabled = false;
+                    chatSendBtn.disabled = false;
+                    chatInput.focus(); // Focus input for next message
+                }
+            }
+        }
+
+        // Event listeners for chat bubble and modal
+        chatBubble.addEventListener('click', () => {
+            chatModal.classList.toggle('hidden');
+            chatBubble.classList.add('hidden'); // Hide bubble when modal is open
+        });
+
+        closeChatBtn.addEventListener('click', () => {
+            chatModal.classList.add('hidden');
+            chatBubble.classList.remove('hidden'); // Show bubble when modal is closed
+        });
+
+        chatSendBtn.addEventListener('click', () => {
+            const userMessage = chatInput.value.trim();
+            if (userMessage) {
+                sendToGeminiAPI(userMessage);
+            }
+        });
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                chatSendBtn.click();
+            }
+        }
+    </script>
+</body>
+</html>
