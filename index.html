@@ -209,7 +209,7 @@
                     </a>
                 </div>
                 <div class="md:w-1/2 flex justify-center items-center mt-6 md:mt-0">
-                    <img src="Promo 1.jpg" alt="[Image of Paket Spesial Pemula]" class="max-h-64 md:max-h-80 rounded-lg shadow-lg object-contain">
+                    <img src="Promo 1.jpg" alt="Image of Paket Spesial Pemula" class="max-h-64 md:max-h-80 rounded-lg shadow-lg object-contain">
                 </div>
             </div>
         </div>
@@ -218,7 +218,7 @@
     <!-- Hero Section (Beranda Content) -->
     <section id="home" class="relative bg-gradient-to-r from-[#1A321F] to-[#284A33] text-white flex items-center justify-center min-h-[60vh] md:min-h-[80vh] overflow-hidden">
         <!-- Background image or pattern, adjusted for dark overlay -->
-        <img src="https://placehold.co/1920x1080/2C2C2C/4CAF50?text=Beauty+Products" alt="Beauty Products" class="absolute inset-0 w-full h-full object-cover opacity-30">
+        <img src="https://placehold.co/1920x1080/2C2C2C/4CAF50?text=Beauty+Products" alt="Image of Beauty Products" class="absolute inset-0 w-full h-full object-cover opacity-30">
         <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Dark overlay -->
 
         <div class="container mx-auto px-4 text-center z-10 py-16">
@@ -271,7 +271,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 pt-8 mt-8">
-                <p>&copy; <span id="current-year"></span> Makmur Baru Global. Hak Cipta Dilindungi Undang-Undang.</p>
+                <p>&copy; <span id="current-year-footer"></span> Makmur Baru Global. Hak Cipta Dilindungi Undang-Undang.</p>
             </div>
         </div>
     </footer>
@@ -306,7 +306,7 @@
 
     <script>
         // Set current year in footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        document.getElementById('current-year-footer').textContent = new Date().getFullYear();
 
         // Function to update current day, date, and time
         function updateDateTime() {
@@ -345,6 +345,14 @@
         const chatInput = document.getElementById('chat-input');
         const chatSendBtn = document.getElementById('chat-send-btn');
         const chatLoading = document.getElementById('chat-loading');
+
+        // Toggle mobile menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
         let chatHistory = [{
             role: "user",
@@ -394,17 +402,20 @@
 
                     if (!response.ok) {
                         if (response.status === 429) { // Too many requests
-                            console.warn(`Rate limit hit. Retrying in ${delay / 1000}s...`);
+                            // console.warn(`Rate limit hit. Retrying in ${delay / 1000}s...`); // Suppress console.warn for retries as per instructions
                             await new Promise(res => setTimeout(res, delay));
                             delay *= 2; // Exponential backoff
                             retries++;
                             continue;
                         } else {
-                            throw new Error(`HTTP error! status: ${response.status}`);
+                            console.error('API responded with an error status:', response.status, response.statusText);
+                            const errorBody = await response.text(); // Read body as text for debugging
+                            console.error('API Error Body:', errorBody);
+                            throw new Error(`API error! status: ${response.status} - ${errorBody}`);
                         }
                     }
 
-                    const result = await response.json();
+                    const result = await response.json(); // This might throw if not valid JSON
 
                     if (result.candidates && result.candidates.length > 0 &&
                         result.candidates[0].content && result.candidates[0].content.parts &&
@@ -413,12 +424,14 @@
                         displayMessage(botResponse, 'bot');
                         chatHistory.push({ role: "model", parts: [{ text: botResponse }] }); // Add bot response to history
                     } else {
-                        displayMessage("Maaf, saya tidak dapat memahami respons. Silakan coba lagi.", 'bot');
+                        console.error('Unexpected API response structure:', result);
+                        displayMessage("Maaf, saya tidak dapat memahami respons dari asisten. Silakan coba lagi.", 'bot');
                     }
                     break; // Exit loop on success
                 } catch (error) {
-                    console.error('Error communicating with Gemini API:', error);
-                    displayMessage("Terjadi kesalahan saat berkomunikasi dengan asisten. Mohon coba lagi.", 'bot');
+                    console.error('Error during API communication or processing:', error);
+                    // More specific error message for the user
+                    displayMessage(`Terjadi kesalahan saat berkomunikasi dengan asisten. Mohon coba lagi. Detail: ${error.message}`, 'bot');
                     break; // Exit loop on critical error
                 } finally {
                     chatLoading.classList.add('hidden'); // Hide loading indicator
