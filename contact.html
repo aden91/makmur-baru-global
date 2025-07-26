@@ -36,7 +36,7 @@
         .shadow-green {
             box-shadow: 0 10px 15px -3px rgba(30, 63, 42, 0.3), 0 4px 6px -2px rgba(30, 63, 42, 0.2);
         }
-        /* Chatbot specific styles (Copy these from index.html) */
+        /* Chatbot specific styles */
         .chat-bubble {
             position: fixed;
             bottom: 20px;
@@ -143,7 +143,7 @@
 </head>
 <body class="text-gray-800">
 
-    <!-- Header Section (Salin dari index.html) -->
+    <!-- Header Section -->
     <header class="bg-white shadow-md py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center flex-wrap">
             <!-- Logo -->
@@ -170,7 +170,7 @@
         </div>
     </header>
 
-    <!-- Mobile Navigation Menu (hidden by default) (Salin dari index.html) -->
+    <!-- Mobile Navigation Menu (hidden by default) -->
     <div id="mobile-menu" class="hidden bg-white shadow-lg py-4 md:hidden">
         <nav class="flex flex-col items-center space-y-4">
             <a href="index.html" class="nav-item text-gray-700 hover:text-green-600 font-medium px-4 py-2 rounded-md transition duration-300 ease-in-out w-full text-center">Beranda</a>
@@ -183,7 +183,7 @@
         </nav>
     </div>
 
-    <!-- Date and Time Display Section (Salin dari index.html) -->
+    <!-- Date and Time Display Section -->
     <section class="bg-green-50 py-3 shadow-sm">
         <div class="container mx-auto px-4 text-center">
             <div id="datetime-display" class="text-gray-700 text-sm md:text-base font-medium">
@@ -192,7 +192,7 @@
         </div>
     </section>
 
-    <!-- Contact Section (Konten Utama untuk contact.html) -->
+    <!-- Contact Section (Main content for contact.html) -->
     <section id="contact" class="section-padding bg-[#1A321F] text-white">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient-green">Hubungi Kami</h2>
@@ -226,7 +226,7 @@
             <div class="mt-8 max-w-5xl mx-auto rounded-lg shadow-lg overflow-hidden border border-[#284A33]">
                 <h3 class="text-lg font-semibold text-[#4CAF50] p-4 bg-[#284A33] text-left">Peta Alamat Kantor</h3>
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.96963499427!2d112.72379377480436!3d-7.350329992686127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e5aa9a15f011%3A0x6e761c569a71060c!2sPergudangan%20dan%20Industri%20SIRIE%20Blok%20Q80%2C%20Rangkah%20Kidul%2C%20Sidoarjo%2C%20Kabupaten%20Sidoarjo%2C%20Jawa%20Timur%2061234%2C%20Indonesia!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.96963499427!2d112.72379377480436!3d-7.350329992686127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e5aa9a15f011%3A0x6e761c569a71060c!2sPergudangan%20dan%20Industri%20SIRIE%20Blok%20Q80%2C%20Rangkah%20Kidul%2C%20Sidoarjo%2C%20Kabupaten%20Sidoarjo%2C%20Jawa%20Timur%2061234%2C%20Indonesia!5e0!3m2!1sen!2sid!4v1709403600000!5m2!1sen!2sid"
                     width="100%"
                     height="450"
                     style="border:0;"
@@ -273,7 +273,7 @@
         </div>
     </section>
 
-    <!-- Footer Section (Salin dari index.html) -->
+    <!-- Footer Section -->
     <footer class="bg-[#1A321F] text-gray-300 py-8">
         <div class="container mx-auto px-4 text-center">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -310,12 +310,12 @@
         </div>
     </footer>
 
-    <!-- Chatbot Floating Bubble (Salin dari index.html) -->
+    <!-- Chatbot Floating Bubble -->
     <div id="chat-bubble" class="chat-bubble">
         <i class="fas fa-comments text-3xl"></i>
     </div>
 
-    <!-- Chatbot Modal (Salin dari index.html) -->
+    <!-- Chatbot Modal -->
     <div id="chat-modal" class="chat-modal hidden">
         <div class="chat-header">
             <span>Asisten Makmur Baru Global</span>
@@ -380,6 +380,14 @@
         const chatSendBtn = document.getElementById('chat-send-btn');
         const chatLoading = document.getElementById('chat-loading');
 
+        // Toggle mobile menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
         let chatHistory = [{
             role: "user",
             parts: [{ text: "Anda adalah asisten virtual untuk Makmur Baru Global, perusahaan maklon kosmetik. Tugas Anda adalah membantu pengguna dengan pertanyaan terkait kulit dan merekomendasikan produk Makmur Baru Global yang relevan. Produk kami meliputi: SKIN CARE (DAY CREAM, NIGHT CREAM, FACIAL WASH, FACIAL SOAP BAR, FACE TONER, ROSE WATER, FACE SERUM, SHEET MASK, SUNSCREEN, GEL MASK, CLAY MASK, MOISTURIZER, 2IN1 CREAM, EXFOLIATING PEELING GEL), BODY CARE (BODY LOTION, BODY WASH, BODY SERUM, BODY SCRUB, BODY BUTTER, BODY ESSENCE, BODY TONER, DEODORANT SPRAY, INTIMATE SPRAY, FEMINIM WASH, EXFOLIATING PEELING GEL), HAIR CARE (HAIR SHAMPOO, HAIR TONIC, HAIR SERUM), DECORATIVE (BB CREAM, LOOSE POWDER, CUSHION, LIP CREAM, LIP SERUM, LIP BALM, EAU DE PARFUME), serta MINUMAN KECANTIKAN, PELANGSING & HERBAL. Selalu usahakan untuk merekomendasikan produk Makmur Baru Global yang spesifik jika relevan dengan pertanyaan pengguna. Jaga jawaban Anda ringkas dan informatif, serta dalam bahasa Indonesia." }]
@@ -428,17 +436,20 @@
 
                     if (!response.ok) {
                         if (response.status === 429) { // Too many requests
-                            console.warn(`Rate limit hit. Retrying in ${delay / 1000}s...`);
+                            // console.warn(`Rate limit hit. Retrying in ${delay / 1000}s...`); // Suppress console.warn for retries as per instructions
                             await new Promise(res => setTimeout(res, delay));
                             delay *= 2; // Exponential backoff
                             retries++;
                             continue;
                         } else {
-                            throw new Error(`HTTP error! status: ${response.status}`);
+                            console.error('API responded with an error status:', response.status, response.statusText);
+                            const errorBody = await response.text(); // Read body as text for debugging
+                            console.error('API Error Body:', errorBody);
+                            throw new Error(`API error! status: ${response.status} - ${errorBody}`);
                         }
                     }
 
-                    const result = await response.json();
+                    const result = await response.json(); // This might throw if not valid JSON
 
                     if (result.candidates && result.candidates.length > 0 &&
                         result.candidates[0].content && result.candidates[0].content.parts &&
@@ -447,12 +458,14 @@
                         displayMessage(botResponse, 'bot');
                         chatHistory.push({ role: "model", parts: [{ text: botResponse }] }); // Add bot response to history
                     } else {
-                        displayMessage("Maaf, saya tidak dapat memahami respons. Silakan coba lagi.", 'bot');
+                        console.error('Unexpected API response structure:', result);
+                        displayMessage("Maaf, saya tidak dapat memahami respons dari asisten. Silakan coba lagi.", 'bot');
                     }
                     break; // Exit loop on success
                 } catch (error) {
-                    console.error('Error communicating with Gemini API:', error);
-                    displayMessage("Terjadi kesalahan saat berkomunikasi dengan asisten. Mohon coba lagi.", 'bot');
+                    console.error('Error during API communication or processing:', error);
+                    // More specific error message for the user
+                    displayMessage(`Terjadi kesalahan saat berkomunikasi dengan asisten. Mohon coba lagi. Detail: ${error.message}`, 'bot');
                     break; // Exit loop on critical error
                 } finally {
                     chatLoading.classList.add('hidden'); // Hide loading indicator
